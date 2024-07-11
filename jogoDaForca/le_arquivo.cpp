@@ -1,32 +1,29 @@
-#include <vector>
 #include <iostream>
 #include <fstream>
+#include "le_arquivo.hpp"
+
+std::vector<std::string> le_arquivo(){
+    std::ifstream arquivo;
+    arquivo.open("palavras.txt");
+
+    if(arquivo.is_open()){
+        int quantidade_palavras;
+        arquivo >> quantidade_palavras;
 
 
-using namespace std;
+        std::vector<std::string> palavras_do_arquivo;
 
-vector<string> le_arquivo() {
-    ifstream arquivo("palavras.txt"); // Abre o arquivo "palavras.txt"
+        for(int i=0;i<quantidade_palavras;i++){
+            std::string palavra_lida;
+            arquivo >> palavra_lida;
+            palavras_do_arquivo.push_back(palavra_lida);
+        }
 
-    if (!arquivo.is_open()) { // Verifica se o arquivo foi aberto com sucesso
-        cout << "Erro ao abrir o arquivo!" << endl;
+        arquivo.close();
+        return palavras_do_arquivo;
+    }
+    else{
+        std::cout << "Não foi possível acessar o banco de palavras." << std::endl;
         exit(0);
     }
-
-    int quantidade_palavras;
-    arquivo >> quantidade_palavras; // Lê o número de palavras do arquivo
-
-    vector<string> palavras_arquivo;
-
-    // Lê e exibe cada palavra
-    for (int i = 0; i < quantidade_palavras; i++) {
-        string palavra_lida;
-        arquivo >> palavra_lida; // Lê cada palavra do arquivo
-        palavras_arquivo.push_back(palavra_lida);
-    }
-
-    arquivo.close(); // Fecha o arquivo após a leitura
-    
-    return palavras_arquivo;
-
 }

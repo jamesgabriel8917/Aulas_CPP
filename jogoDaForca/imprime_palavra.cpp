@@ -1,19 +1,18 @@
-#include <string>
 #include <iostream>
+#include <string>
 #include <map>
 
-using namespace std;
+extern std::string palavra_secreta;
+extern std::map<char, bool> chutou;
 
-
-map<char, bool>chutou;
-
-void imprime_palavra(string palavra_secreta){
+void imprime_palavra(){
     for(char letra : palavra_secreta){
-    if(chutou[letra])
-    {
-        cout<< letra <<" ";
-    }else{
-        cout<< "_ ";
+        if(chutou[letra]){
+            std::cout << letra << " ";
+        }
+        else{
+            std::cout << "_ ";
+        }
     }
-}
+    std::cout << std::endl;
 }

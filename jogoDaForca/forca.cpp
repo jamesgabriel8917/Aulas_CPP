@@ -3,46 +3,54 @@
 #include <map>
 #include <vector>
 #include <fstream>
-#include <windows.h>
-#include <time.h>
-
-//pacotes locais
-#include "nao_acertou.cpp"
-#include "letra_existe.cpp"
-
+#include <ctime>
+#include <cstdlib>
+#include "letra_existe.hpp"
+#include "imprime_cabecalho.hpp"
+#include "le_arquivo.hpp"
+#include "sorteia_palavra.hpp"
+#include "nao_enforcou.hpp"
+#include "imprime_erros.hpp"
+#include "imprime_palavra.hpp"
+#include "chuta.hpp"
+#include "adiciona_palavra.hpp"
+#include "nao_acertou.hpp"
 
 using namespace std;
 
-
-
-map<char, bool>chutou;
+string palavra_secreta; 
+map<char, bool> chutou;
 vector<char> chutes_errados;
 
-int main(){
-
+int main () {
     imprime_cabecalho();
 
     le_arquivo();
+    sorteia_palavra();
 
-    string palavra_secreta = sorteia_palavra(); 
-    
-
-    while (nao_acertou(palavra_secreta) && nao_enforcou()){
-
+    while(nao_acertou() && nao_enforcou()){
         imprime_erros();
-        imprime_palavra(palavra_secreta);
-        chuta(palavra_secreta);
-        
+
+        imprime_palavra();
+
+        chuta();
     }
 
-    system("cls");
-    
-    cout<<"Fim de jogo!\n";
-    if(nao_acertou(palavra_secreta)){
-        cout<<"Tente novamente\n";
-    }else{
-        cout<<"Parabens, vc acertou a palavra secreta!!\n";
-        
+    cout << "Fim de jogo!" << endl;
+    cout << "A palavra secreta era: " << palavra_secreta << endl;
+    if(nao_acertou()){
+        cout << "Você perdeu! Tente novamente!" << endl;
     }
-    cout<<"A palavra secreta e: "<<palavra_secreta<<"\n";
+    else{
+        cout << "Parabéns! Você acertou a palavra secreta!" << endl;
+
+        cout << "Você deseja adicionar uma nova palavra ao banco? (S/N) ";
+        char resposta;
+        cin >> resposta;
+        if(resposta == 'S'){
+            adiciona_palavra();
+        }
+    }
+    
+    cin.get();
 }

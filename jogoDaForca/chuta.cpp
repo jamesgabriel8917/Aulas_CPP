@@ -1,29 +1,24 @@
-#include <string>
 #include <iostream>
-#include <map>
 #include <vector>
+#include <map>
+#include "letra_existe.hpp"
 
-//pacotes locais
-#include "letra_existe.cpp"
+extern std::map<char, bool> chutou;
+extern std::vector<char> chutes_errados;
 
+void chuta(){
+    std::cout << "Seu chute: ";
+    char chute;
+    std::cin >> chute;
 
-using namespace std;
+    chutou[chute] = true;
 
-map<char, bool>chutou;
-vector<char> chutes_errados;
-
-void chuta(string palavra_secreta){
-        char chute;
-        cout<<"\nDigite o seu chute:     ";
-        cin>>chute;
-
-        chutou[chute] = true;
-
-        if (chute_existe(chute, palavra_secreta))
-        {
-            cout<<"PARABENS!! Seu chute esta contido na palavra\n";
-        }else{
-            cout<<"Errou!\n";
-            chutes_errados.push_back(chute);
-        }
+    if(letra_existe(chute)){
+        std::cout << "Você acertou! Seu chute está na palavra." << std::endl;
+    }
+    else{
+        std::cout << "Você errou! Seu chute não está na palavra." << std::endl;
+        chutes_errados.push_back(chute);
+    }
+    std::cout << std::endl;
 }
