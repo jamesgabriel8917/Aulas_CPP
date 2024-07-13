@@ -10,4 +10,3 @@ void imprime_erros(){
     }
     std::cout << std::endl;
 }
-""
